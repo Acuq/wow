@@ -1,0 +1,7 @@
+toc
+## Interface: 10300
+## Version: 1.0
+## Author: Your Name
+## Notes: Displays player coordinates in a frame
+
+CoordinateDisplay.lua
