@@ -15,7 +15,7 @@ f:SetBackdrop({
     insets = { left = 25, right = 25, top = -5, bottom = -5 }
 })
 
-f:SetBackdropColor(0, 0, 0, 0)
+f:SetBackdropColor(0, 0, 0, 1)
 
 f:SetScript("OnUpdate", function(s, e)
     local x, y = GetPlayerMapPosition("player")
