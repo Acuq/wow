@@ -78,36 +78,3 @@ def calculate_azimuth(waypoint,x_point, y_point):
 
     print(degrees)
     return degrees
-
-
-def dirrect_corretion_mouse_move(direction,degrees):
-
-    if degrees > direction:
-        turn = degrees - direction
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 960, 540, 0, 0)
-        time.sleep(0.03)
-        pyautogui.moveTo(960+turn, 540)
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 960, 540, 0, 0)
-        print(degrees,"- угол ", direction,"- направление ПРАВО ")
-
-    elif degrees < direction:
-        turn = direction - degrees
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 960, 540, 0, 0)
-        time.sleep(0.03)
-        pyautogui.moveTo(960-turn, 540)
-        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 960, 540, 0, 0)
-        print(degrees,"- угол ", direction,"- направление ЛЕВО ")
-
-def main():
-    x_point, y_point = path_reader('route')
-    direction = calculate_azimuth(0,x_point, y_point)
-    while True:
-        calculate_azimuth(0,x_point, y_point)
-        dirrect_corretion_mouse_move(direction,degrees=calculate_azimuth(0,x_point, y_point))
-        # direction = dirrect_corretion_mouse_move(direction,degrees=calculate_azimuth(0,x_point, y_point))
-        if keyboard.is_pressed('esc'):
-            print("Script stopped.")
-            break
-
-
-main()
