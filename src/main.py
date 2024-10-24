@@ -18,6 +18,7 @@ def current_char_position():
 
     #print(x_value,y_value,end='\r')
     print(y_value,y_value)
+    #
 
     return x_value,y_value
 
