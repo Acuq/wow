@@ -7,19 +7,17 @@ import os
 import math
 import win32api,win32con
 
-
-
 reader = easyocr.Reader(['en'])
 
-
-
 def current_char_position():
-
-    current_x_screen = pyautogui.screenshot(region=(760,1, 200, 60))
-    current_y_screen = pyautogui.screenshot(region=(950,1, 215, 60))
+    current_x_screen = pyautogui.screenshot(region=(918,4, 85, 25))
+    current_y_screen = pyautogui.screenshot(region=(918,35, 85, 28))
 
     x_value = float(''.join([t for _, t, _ in reader.readtext(np.array(current_x_screen))]).replace(" ", ""))
     y_value = float(''.join([t for _, t, _ in reader.readtext(np.array(current_y_screen))]).replace(" ", ""))
+
+    #print(x_value,y_value,end='\r')
+    print(y_value,y_value)
 
     return x_value,y_value
 
@@ -71,10 +69,30 @@ def calculate_azimuth(waypoint,x_point, y_point):
     
     dx = x_point[waypoint] - x_current
     dy = y_point[waypoint] - y_current
-
     radians = math.atan2(dy, dx)
     degrees = math.degrees(radians*2)
 
-
     print(degrees)
     return degrees
+
+
+def dirrect_corretion_mouse_move(direction,degrees):
+
+    if degrees > direction:
+        turn = degrees - direction
+        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 960, 540, 0, 0)
+        time.sleep(0.03)
+        pyautogui.moveTo(960+turn, 540)
+        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 960, 540, 0, 0)
+        print(degrees,"- угол ", direction,"- направление ПРАВО ")
+
+    elif degrees < direction:
+        turn = direction - degrees
+        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 960, 540, 0, 0)
+        time.sleep(0.03)
+        pyautogui.moveTo(960-turn, 540)
+        win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, 960, 540, 0, 0)
+        print(degrees,"- угол ", direction,"- направление ЛЕВО ")
+
+while True:
+    current_char_position()
